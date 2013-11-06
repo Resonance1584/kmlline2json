@@ -34,7 +34,7 @@ args.each do |inputFileName|
             # Parse document
             doc = Nokogiri::XML(f)
 
-            #Remove namespaces as I am lazy
+            # Remove namespaces as I am lazy
             doc.remove_namespaces!
 
             jsonDoc = Hash.new
@@ -49,11 +49,11 @@ args.each do |inputFileName|
                 coords.each do |latLng|
                     latLng = latLng.strip
                     latLng = latLng.split(",")
-                    #Avoid nil values
+                    # Avoid nil values
                     if (latLng[1].nil? || latLng[0].nil?)
                         next
                     end
-                    #Swap lat - lng order and store in array
+                    # Swap lat - lng order and store in array
                     latLngArray = Array.new
                     latLngArray.push(latLng[1])
                     latLngArray.push(latLng[0])
@@ -61,11 +61,11 @@ args.each do |inputFileName|
                 end
 
                 jsonDoc[name] = coordsArray
+                
             end
 
-            # Append .kml to original filename and write output
+            # Append .json to original filename and write output
             File.open(inputFileName + '.json', 'w') {|f| f.write(JSON.generate(jsonDoc)) }
-            
 
         end
     else
